@@ -37,21 +37,53 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: If you remove getClaims() and you use server-side rendering
   // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims()
-  const user = data?.claims
+  let claims: object | undefined
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth") &&
-    // the OAuth consent route sends unauthenticated visitors to the login page
-    // itself, so that it can preserve the authorization in the `next` parameter
-    request.nextUrl.pathname !== "/oauth/consent"
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    url.pathname = "/auth/login"
-    return NextResponse.redirect(url)
+  try {
+    const { data } = await supabase.auth.getClaims()
+    claims = data?.claims
+  } catch {
+    claims = undefined
+  }
+
+  const isAdminRoute =
+    request.nextUrl.pathname === "/admin" ||
+    request.nextUrl.pathname.startsWith("/admin/")
+  const isLoginRoute = request.nextUrl.pathname === "/admin/login"
+
+  if (isAdminRoute && !isLoginRoute) {
+    const redirectToLogin = (reason?: "forbidden") => {
+      const loginUrl = request.nextUrl.clone()
+      loginUrl.pathname = "/admin/login"
+      loginUrl.search = ""
+
+      if (reason) {
+        loginUrl.searchParams.set("error", reason)
+      } else {
+        loginUrl.searchParams.set(
+          "next",
+          `${request.nextUrl.pathname}${request.nextUrl.search}`
+        )
+      }
+
+      const redirectResponse = NextResponse.redirect(loginUrl)
+      supabaseResponse.cookies.getAll().forEach((cookie) => {
+        redirectResponse.cookies.set(cookie)
+      })
+
+      return redirectResponse
+    }
+
+    if (!claims) {
+      return redirectToLogin()
+    }
+
+    const { data: isAdmin, error } = await supabase.rpc("is_blog_admin")
+
+    if (error || !isAdmin) {
+      await supabase.auth.signOut()
+      return redirectToLogin("forbidden")
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.

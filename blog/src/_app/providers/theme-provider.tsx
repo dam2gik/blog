@@ -3,6 +3,8 @@
 import * as React from "react"
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes"
 
+import { TooltipProvider } from "@/shared/ui"
+
 function ThemeProvider({
   children,
   ...props
@@ -15,8 +17,10 @@ function ThemeProvider({
       disableTransitionOnChange
       {...props}
     >
-      <ThemeHotkey />
-      {children}
+      <TooltipProvider>
+        <ThemeHotkey />
+        {children}
+      </TooltipProvider>
     </NextThemesProvider>
   )
 }
