@@ -4,7 +4,18 @@ test("renders the public blog without horizontal overflow", async ({
   page,
 }) => {
   const pageErrors: Error[] = []
+  const hydrationWarnings: string[] = []
   page.on("pageerror", (error) => pageErrors.push(error))
+  page.on("console", (message) => {
+    const text = message.text()
+    if (
+      /Cannot render a sync or defer|cannot be a child of <html>|hydration error|hydration failed/i.test(
+        text
+      )
+    ) {
+      hydrationWarnings.push(text)
+    }
+  })
   const response = await page.goto("/")
 
   expect(response?.ok()).toBeTruthy()
@@ -27,6 +38,7 @@ test("renders the public blog without horizontal overflow", async ({
 
   await page.evaluate(() => window.dispatchEvent(new Event("keydown")))
   expect(pageErrors).toEqual([])
+  expect(hydrationWarnings).toEqual([])
 })
 
 test("renders the administrator login page", async ({ page }) => {
