@@ -7,6 +7,7 @@ import "@/_app/styles/globals.css"
 import { siteConfig } from "@/shared/config"
 
 const googleTagManagerId = "GTM-WLSK4XN2"
+const googleAnalyticsId = "G-362EK6X225"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -62,6 +63,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         </noscript>
         <ThemeProvider>{children}</ThemeProvider>
+        <Script
+          id="google-analytics"
+          src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics-init" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');`}
+        </Script>
       </body>
     </html>
   )
