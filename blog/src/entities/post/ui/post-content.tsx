@@ -1,8 +1,18 @@
 import { createElement, Fragment, type ReactNode } from "react"
 import type { JSONContent } from "@tiptap/react"
 
+import { CodeBlock } from "./code-block"
+import { LinkPreviewCard } from "./link-preview-card"
+
 interface PostContentProps {
   content: JSONContent
+}
+
+function getImageDimension(value: unknown) {
+  const dimension = Number(value)
+  return Number.isInteger(dimension) && dimension > 0 && dimension <= 4000
+    ? dimension
+    : undefined
 }
 
 function renderText(node: JSONContent, key: string): ReactNode {
@@ -65,9 +75,11 @@ function renderNode(node: JSONContent, key: string): ReactNode {
       return <blockquote key={key}>{children}</blockquote>
     case "codeBlock":
       return (
-        <pre key={key}>
-          <code>{children}</code>
-        </pre>
+        <CodeBlock
+          key={key}
+          code={node.content?.map((child) => child.text ?? "").join("") ?? ""}
+          language={node.attrs?.language}
+        />
       )
     case "hardBreak":
       return <br key={key} />
@@ -81,7 +93,24 @@ function renderNode(node: JSONContent, key: string): ReactNode {
           key={key}
           src={String(node.attrs?.src ?? "")}
           alt={String(node.attrs?.alt ?? "")}
+          width={getImageDimension(node.attrs?.width)}
+          height={getImageDimension(node.attrs?.height)}
           loading="lazy"
+        />
+      )
+    case "linkPreview":
+      return (
+        <LinkPreviewCard
+          key={key}
+          url={String(node.attrs?.url ?? "")}
+          title={node.attrs?.title ? String(node.attrs.title) : undefined}
+          description={
+            node.attrs?.description ? String(node.attrs.description) : undefined
+          }
+          image={node.attrs?.image ? String(node.attrs.image) : undefined}
+          siteName={
+            node.attrs?.siteName ? String(node.attrs.siteName) : undefined
+          }
         />
       )
     default:
