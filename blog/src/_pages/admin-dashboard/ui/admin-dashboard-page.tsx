@@ -1,4 +1,4 @@
-import { FileText, FolderTree, Send } from "lucide-react"
+import { FileText, FolderTree, Plus, Send } from "lucide-react"
 import Link from "next/link"
 
 import { getAdminPosts, getCategories } from "@/entities/post/index.server"
@@ -20,37 +20,43 @@ export async function AdminDashboardPage() {
   ]
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8">
+    <div className="mx-auto max-w-6xl space-y-7">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">대시보드</h1>
+          <h1 className="text-2xl font-semibold tracking-[-0.03em]">
+            대시보드
+          </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            블로그 현황을 한눈에 확인합니다.
+            콘텐츠 현황과 최근 작업을 확인합니다.
           </p>
         </div>
         <Button nativeButton={false} render={<Link href="/admin/posts/new" />}>
-          새 글 작성
+          <Plus />새 글 작성
         </Button>
       </div>
 
-      <section className="grid border-y sm:grid-cols-3">
+      <section className="grid overflow-hidden rounded-xl border bg-background sm:grid-cols-3">
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="flex items-center gap-3 border-b px-4 py-5 last:border-b-0 sm:border-r sm:border-b-0 sm:last:border-r-0"
+            className="flex items-center gap-4 border-b px-5 py-5 last:border-b-0 sm:border-r sm:border-b-0 sm:last:border-r-0"
           >
-            <stat.icon className="size-4 text-muted-foreground" />
+            <div className="grid size-9 place-items-center rounded-lg bg-muted text-muted-foreground">
+              <stat.icon className="size-4" />
+            </div>
             <div>
               <p className="text-xs text-muted-foreground">{stat.label}</p>
-              <p className="mt-1 text-2xl font-semibold">{stat.value}</p>
+              <p className="mt-0.5 text-2xl font-semibold tabular-nums">
+                {stat.value}
+              </p>
             </div>
           </div>
         ))}
       </section>
 
-      <section>
-        <div className="flex items-center justify-between border-b pb-3">
-          <h2 className="text-sm font-semibold">최근 수정한 글</h2>
+      <section className="overflow-hidden rounded-xl border bg-background">
+        <div className="flex h-14 items-center justify-between border-b px-5">
+          <h2 className="font-semibold">최근 수정한 글</h2>
           <Button
             variant="ghost"
             size="sm"
@@ -64,7 +70,7 @@ export async function AdminDashboardPage() {
           {posts.slice(0, 5).map((post) => (
             <div
               key={post.id}
-              className="flex items-center justify-between gap-4 border-b py-4"
+              className="flex items-center justify-between gap-4 border-b px-5 py-4 last:border-b-0"
             >
               <div className="min-w-0">
                 <Link
@@ -85,7 +91,7 @@ export async function AdminDashboardPage() {
             </div>
           ))}
           {posts.length === 0 && (
-            <p className="py-12 text-center text-sm text-muted-foreground">
+            <p className="px-5 py-16 text-center text-sm text-muted-foreground">
               작성된 글이 없습니다.
             </p>
           )}

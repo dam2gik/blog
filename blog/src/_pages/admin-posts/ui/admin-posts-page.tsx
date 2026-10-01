@@ -23,7 +23,7 @@ export async function AdminPostsPage() {
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-semibold">글 관리</h1>
+          <h1 className="text-2xl font-semibold tracking-[-0.03em]">글 관리</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             발행 상태와 글 내용을 관리합니다.
           </p>
@@ -32,7 +32,7 @@ export async function AdminPostsPage() {
           <Plus />새 글
         </Button>
       </div>
-      <div className="overflow-hidden rounded-lg border bg-background">
+      <div className="overflow-hidden rounded-xl border bg-background">
         <Table>
           <TableHeader>
             <TableRow>

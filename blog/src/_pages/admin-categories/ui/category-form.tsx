@@ -21,7 +21,7 @@ export function CategoryForm() {
   return (
     <form
       action={formAction}
-      className="space-y-4 rounded-lg border bg-background p-4"
+      className="space-y-5 rounded-xl border bg-background p-5"
     >
       <h2 className="text-sm font-semibold">카테고리 추가</h2>
       <div className="space-y-2">

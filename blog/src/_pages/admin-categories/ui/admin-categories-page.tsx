@@ -12,13 +12,13 @@ export async function AdminCategoriesPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold">카테고리</h1>
+        <h1 className="text-2xl font-semibold tracking-[-0.03em]">카테고리</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           글을 분류할 기준을 관리합니다.
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_280px]">
-        <div className="rounded-lg border bg-background">
+        <div className="overflow-hidden rounded-xl border bg-background">
           {categories.map((category) => (
             <div
               key={category.id}

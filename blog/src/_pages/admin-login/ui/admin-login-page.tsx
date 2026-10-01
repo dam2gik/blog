@@ -6,7 +6,7 @@ import { LoginForm } from "./login-form"
 
 export function AdminLoginPage() {
   return (
-    <main className="grid min-h-dvh place-items-center px-5 py-10">
+    <main className="grid min-h-dvh place-items-center bg-[#f6f7f9] px-5 py-10 dark:bg-background">
       <div className="w-full max-w-sm">
         <Button
           variant="ghost"
@@ -16,7 +16,8 @@ export function AdminLoginPage() {
         >
           ← 블로그로
         </Button>
-        <div className="mt-8 border-t pt-8">
+        <div className="mt-4 rounded-xl border bg-background p-7">
+          <p className="mb-6 text-lg font-bold tracking-[-0.04em]">kim2gic</p>
           <h1 className="text-2xl font-semibold tracking-[-0.03em]">
             관리자 로그인
           </h1>

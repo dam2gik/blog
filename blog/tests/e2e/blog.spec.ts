@@ -3,15 +3,20 @@ import { expect, test } from "@playwright/test"
 test("renders the public blog without horizontal overflow", async ({
   page,
 }) => {
+  const pageErrors: Error[] = []
+  page.on("pageerror", (error) => pageErrors.push(error))
   const response = await page.goto("/")
 
   expect(response?.ok()).toBeTruthy()
-  await expect(
-    page.getByRole("heading", { name: "오래 남길 생각을 씁니다." })
-  ).toBeVisible()
+  await expect(page.getByRole("heading", { name: "글" })).toBeVisible()
+  await expect(page.getByRole("link", { name: "kim2gic" })).toBeVisible()
   await expect(
     page.getByRole("navigation", { name: "주요 메뉴" })
   ).toBeVisible()
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://kim2gic.kr"
+  )
 
   const hasHorizontalOverflow = await page.evaluate(
     () =>
@@ -19,6 +24,9 @@ test("renders the public blog without horizontal overflow", async ({
       document.documentElement.clientWidth
   )
   expect(hasHorizontalOverflow).toBe(false)
+
+  await page.evaluate(() => window.dispatchEvent(new Event("keydown")))
+  expect(pageErrors).toEqual([])
 })
 
 test("renders the administrator login page", async ({ page }) => {
