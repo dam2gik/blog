@@ -8,7 +8,7 @@ test("renders the public blog without horizontal overflow", async ({
   const response = await page.goto("/")
 
   expect(response?.ok()).toBeTruthy()
-  await expect(page.getByRole("heading", { name: "글" })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "글", exact: true })).toBeVisible()
   await expect(page.getByRole("link", { name: "kim2gic" })).toBeVisible()
   await expect(
     page.getByRole("navigation", { name: "주요 메뉴" })
