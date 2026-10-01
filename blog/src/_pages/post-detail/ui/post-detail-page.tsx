@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
@@ -69,14 +68,14 @@ export async function PostDetailPage({ slug }: PostDetailPageProps) {
       </header>
 
       {post.coverImageUrl && (
-        <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-lg bg-muted">
-          <Image
+        <div className="mt-8 flex justify-center">
+          {/* The uploaded image has no stored dimensions; use its intrinsic ratio. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={post.coverImageUrl}
             alt=""
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 768px"
+            fetchPriority="high"
+            className="block h-auto max-h-[min(65vh,560px)] w-auto max-w-full rounded-lg object-contain"
           />
         </div>
       )}

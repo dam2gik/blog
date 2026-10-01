@@ -5,7 +5,7 @@ import { siteConfig } from "@/shared/config"
 export function SiteFooter() {
   return (
     <footer className="mt-auto border-t">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-6 text-xs text-muted-foreground">
+      <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-8 text-xs text-muted-foreground">
         <p>
           © {new Date().getFullYear()} {siteConfig.author}
         </p>

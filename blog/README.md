@@ -1,4 +1,4 @@
-# 상훈의 기록
+# kim2gic
 
 Next.js, Tiptap, Supabase로 만든 개인 블로그입니다. 방문자는 발행된 글을
 읽을 수 있고, 등록된 관리자만 글과 카테고리, 첨부 파일을 관리할 수 있습니다.
@@ -33,7 +33,7 @@ layer that delegates rendering to `src/_pages`.
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_SITE_URL=https://kim2gic.kr
 ```
 
 Supabase 프로젝트를 연결하고 migration을 반영합니다.

@@ -1,4 +1,3 @@
-import { Code2 } from "lucide-react"
 import Link from "next/link"
 
 import { siteConfig } from "@/shared/config"
@@ -6,11 +5,11 @@ import { Button } from "@/shared/ui"
 
 export function SiteHeader() {
   return (
-    <header className="border-b">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-5">
+    <header className="border-b bg-background">
+      <div className="mx-auto flex h-16 max-w-4xl items-center justify-between px-6">
         <Link
           href="/"
-          className="text-[15px] font-semibold tracking-[-0.02em] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          className="text-xl font-bold tracking-[-0.045em] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         >
           {siteConfig.name}
         </Link>
@@ -25,8 +24,7 @@ export function SiteHeader() {
           </Button>
           <Button
             variant="ghost"
-            size="icon-sm"
-            aria-label="GitHub 방문"
+            size="sm"
             nativeButton={false}
             render={
               <a
@@ -36,7 +34,7 @@ export function SiteHeader() {
               />
             }
           >
-            <Code2 />
+            GitHub
           </Button>
         </nav>
       </div>
