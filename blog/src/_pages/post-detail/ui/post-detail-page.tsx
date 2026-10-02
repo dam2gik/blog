@@ -32,7 +32,7 @@ export async function PostDetailPage({ slug }: PostDetailPageProps) {
   }
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-5 py-10 md:py-14">
+    <article className="mx-auto w-full max-w-3xl px-6 py-10 sm:px-10 md:pt-14 md:pb-24">
       <Button
         variant="ghost"
         size="sm"
@@ -42,17 +42,17 @@ export async function PostDetailPage({ slug }: PostDetailPageProps) {
         {"\u2190"} 글 목록
       </Button>
 
-      <header className="mt-7 border-b pb-8">
-        <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+      <header className="mt-10 border-b pb-10 md:mt-14 md:pb-12">
+        <div className="mb-5 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
           {post.category && <span>{post.category.title}</span>}
           {post.category && <span aria-hidden>{"\u00b7"}</span>}
           <time dateTime={publishedAt}>{formatDate(publishedAt)}</time>
         </div>
-        <h1 className="text-3xl font-semibold tracking-[-0.04em] md:text-4xl/12">
+        <h1 className="text-3xl/10 font-semibold tracking-[-0.045em] text-pretty md:text-5xl/[1.3]">
           {post.title}
         </h1>
         {post.excerpt && (
-          <p className="mt-4 max-w-2xl text-base/7 text-muted-foreground">
+          <p className="mt-6 max-w-2xl text-base/8 text-muted-foreground md:text-lg/8">
             {post.excerpt}
           </p>
         )}
@@ -80,9 +80,24 @@ export async function PostDetailPage({ slug }: PostDetailPageProps) {
         </div>
       )}
 
-      <div className="mt-9">
+      <div className="mt-10 md:mt-12">
         <PostContent content={post.content} />
       </div>
+
+      <footer className="mt-16 flex flex-wrap items-center justify-between gap-5 border-t pt-8 text-sm">
+        <p className="text-muted-foreground">
+          Written by{" "}
+          <span className="font-medium text-foreground">
+            {siteConfig.author}
+          </span>
+        </p>
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center underline underline-offset-4"
+        >
+          전체 글 보기
+        </Link>
+      </footer>
 
       <script
         type="application/ld+json"
